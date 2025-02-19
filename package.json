@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build-prod": "ng build --output-path docs --base-href /podcast-cost-tool/",
+    "update-prod": "npx angular-cli-ghpages --dir=docs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
