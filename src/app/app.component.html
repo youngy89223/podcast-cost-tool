@@ -1,32 +1,52 @@
-<div class="padding-50">
-  <div *ngIf="!readyStart" class="w-full h-full flex-center h-83-vh">
+<div [class.content1]="!hasInitData" class="transition-1 bg-aliceblue">
+  <div [class.content2]="!hasInitData">
+    <div *ngIf="!hasInitData || (hasInitData && readyStart)" [class.w-30-p]="!hasInitData" [class.mr-50]="!hasInitData" [class.box-img]="!hasInitData" [class.pd-50-20]="hasInitData" class="transition-1 flex">
+      <img [class.box-img]="!hasInitData" [class.w-300]="!hasInitData" [class.w-60]="hasInitData" class="br-10 transition-1" src="/podcast-cost-tool/assets/img/logo.jpg" />
+      <h2 *ngIf="hasInitData" class="title-1 slide-text" [class.show]="slideText">PODCAST COST TOOL</h2>
+    </div>
+    <div *ngIf="!hasInitData" class="w-70-p bounceIn">
+      <h1 class="mb-20">建立成本對照表</h1>
+      <div class="content3">
+        <h4 class="bounceIn animation-delay2">從我的檔案匯入</h4>
+        <input type="file" class="form-control mb-40 bounceIn animation-delay2" (change)="onFileSelected($event)" accept=".csv" />
+        <h4 class="bounceIn animation-delay4">從Google表單匯入</h4>
+        <div class="flex w-full bounceIn animation-delay4">
+          <p class="mb-0 mr-10 flex align-items-center w-10-p">表單id</p>
+          <input type="text" placeholder="敬請期待功能開放" disabled class="form-control w-80-p mr-10" (change)="onFileSelected($event)" accept=".csv" />
+          <button class="form-control w-10-p" disabled>送出</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="hasInitData" class="pd-0-50 bg-aliceblue">
+  <div *ngIf="!readyStart" class="w-full h-full flex-center h-94-vh">
     <div class="loading-bar-div1 zoomUp1 transition-delay1"></div>
     <div class="loading-bar-div2 zoomUp2 transition-delay2"></div>
     <div class="loading-bar-div3 zoomUp3 transition-delay3"></div>
   </div>
-  <div *ngIf="readyStart" class="h-full flex align-items-center justify-content-center box overflow-auto h-83-vh bounceIn">
+  <div *ngIf="readyStart" class="h-full flex align-items-center justify-content-center box overflow-auto h-84-vh bounceIn">
     <div class="w-50-p h-full border-right pr-20px flex flex-direction-column">
-      <h2 class="bounceIn animation-delay2">成本對照表</h2>
-      <input type="file" class="form-control mb-20 bounceIn animation-delay2" (change)="onFileSelected($event)" accept=".csv" />
+      <h2 class="bounceIn animation-delay2 color-cadetblue blod">成本對照表</h2>
       <ng-container *ngIf="moderatorArray.length > 0">
         <ul class="nav nav-tabs fade-in-down animation-delay6 mb-20" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#moderator-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">主持人</button>
+            <button class="nav-link active" id="moderator-tab" data-bs-toggle="tab" data-bs-target="#moderator-tab-pane" type="button" role="tab" aria-controls="moderator-tab-pane" aria-selected="true">主持人</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#recordingStudio-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">錄音室</button>
+            <button class="nav-link" id="recordingStudio-tab" data-bs-toggle="tab" data-bs-target="#recordingStudio-tab-pane" type="button" role="tab" aria-controls="recordingStudio-tab-pane" aria-selected="false">錄音室</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#postMix-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">後製混音</button>
+            <button class="nav-link" id="postMix-tab" data-bs-toggle="tab" data-bs-target="#postMix-tab-pane" type="button" role="tab" aria-controls="postMix-tab-pane" aria-selected="false">後製混音</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#sideRecordingCombination-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">側錄梳化</button>
+            <button class="nav-link" id="sideRecordingCombination-tab" data-bs-toggle="tab" data-bs-target="#sideRecordingCombination-tab-pane" type="button" role="tab" aria-controls="sideRecordingCombination-tab-pane" aria-selected="false">側錄梳化</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#outboundInterviewWriter-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">訪綱寫手</button>
+            <button class="nav-link" id="outboundInterviewWriter-tab" data-bs-toggle="tab" data-bs-target="#outboundInterviewWriter-tab-pane" type="button" role="tab" aria-controls="outboundInterviewWriter-tab-pane" aria-selected="false">訪綱寫手</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#photography-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">平面攝影</button>
+            <button class="nav-link" id="photography-tab" data-bs-toggle="tab" data-bs-target="#photography-tab-pane" type="button" role="tab" aria-controls="photography-tab-pane" aria-selected="false">平面攝影</button>
           </li>
         </ul>
         <div class="tab-content h-full fade-in-down animation-delay6 overflow-auto" id="myTabContent">
@@ -84,33 +104,30 @@
         </div>
       </ng-container>
     </div>
-    <div *ngIf="moderatorArray.length === 0" class="w-50-p h-full bounceIn animation-delay4 ml-20">
-      <h2>無成本對照表</h2>
-    </div>
     <div *ngIf="moderatorArray.length > 0" class="w-50-p h-full bounceIn animation-delay4 ml-20 position-relative">
-      <h2 *ngIf="!startCalc">開始計算成本</h2>
-      <h2 *ngIf="startCalc">計算中...</h2>
+      <h2 *ngIf="!startCalc" class="color-cadetblue blod">設定成本內容</h2>
+      <h2 *ngIf="startCalc" class="color-cadetblue blod">計算中...</h2>
       <div class="box2 mb-20" [class.opacity-3]="startCalc">
-        <h5>主持人</h5>
+        <h5 class="color-cadetblue blod">主持人</h5>
         <select class="form-control mb-20" #moderatorSelect [disabled]="startCalc">
           <ng-container *ngFor="let moderator of moderatorArray">
             <option [value]="moderator.cost">{{ moderator.name }}</option>
           </ng-container>
         </select>
-        <h5>錄音室</h5>
+        <h5 class="color-cadetblue blod">錄音室</h5>
         <select class="form-control mb-20" #recordingStudioSelect [disabled]="startCalc">
           <ng-container *ngFor="let recordingStudio of recordingStudioArray">
             <option [value]="recordingStudio.cost">{{ recordingStudio.name }}</option>
           </ng-container>
         </select>
-        <h5>後制混音</h5>
+        <h5 class="color-cadetblue blod">後制混音</h5>
         <select class="form-control mb-20" #postMixSelect [disabled]="startCalc">
           <option value="0">無</option>
           <ng-container *ngFor="let postMix of postMixArray">
             <option [value]="postMix.cost">{{ postMix.name }}</option>
           </ng-container>
         </select>
-        <h5>側錄梳化</h5>
+        <h5 class="color-cadetblue blod">側錄梳化</h5>
         <div class="flex">
           <select class="form-control mb-20" (change)="sideRecordingCombinationChange(sideRecordingCombinationSelect.value)" [disabled]="startCalc" #sideRecordingCombinationSelect>
             <option value="0">無</option>
@@ -131,7 +148,7 @@
             </div>
           </ng-container>
         </div>
-        <h5>訪綱</h5>
+        <h5 class="color-cadetblue blod">訪綱</h5>
         <div class="flex">
           <select class="form-control mb-20" (change)="outboundInterviewWriterChange(outboundInterviewWriterSelect.value)" [disabled]="startCalc" #outboundInterviewWriterSelect>
             <option value="0">無</option>
@@ -146,7 +163,7 @@
             </div>
           </ng-container>
         </div>
-        <h5>平面攝影</h5>
+        <h5 class="color-cadetblue blod">平面攝影</h5>
         <select class="form-control mb-20" [disabled]="startCalc" #photographySelect>
           <option value="0">無</option>
           <ng-container *ngFor="let photography of photographyArray">
@@ -154,7 +171,7 @@
           </ng-container>
         </select>
       </div>
-      <button type="button" id="liveToastBtn" class="form-control btn btn-outline-primary" (click)="calcResult()">計算</button>
+      <button type="button" id="liveToastBtn" class="form-control btn btn-outline-primary btn-count" (click)="calcResult()">計算</button>
       <div *ngIf="startCalc" class="w-full h-full flex-center position-absolute -top-50">
         <div class="loading-bar-div1 zoomUp1 transition-delay1"></div>
         <div class="loading-bar-div2 zoomUp2 transition-delay2"></div>
@@ -167,11 +184,11 @@
   <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="/podcast-cost-tool/assets/img/icon_green_check.svg" class="rounded me-2" alt="...">
-      <strong class="me-auto">計算結果</strong>
+      <strong class="me-auto color-cadetblue">計算結果</strong>
       <small>{{ nowDateTime }}</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-    <div class="toast-body">
+    <div class="toast-body color-cadetblue">
       總成本：NT {{ resultCost }}
     </div>
   </div>

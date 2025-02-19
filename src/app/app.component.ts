@@ -21,6 +21,8 @@ export class AppComponent {
   @ViewChild('outboundInterviewWriterCount', { static: false }) outboundInterviewWriterCount: ElementRef | any;
   @ViewChild('photographySelect', { static: false }) photographySelect: ElementRef | any;
   title = 'podcast-cost-calc';
+  slideText: boolean = false;
+  hasInitData: boolean = false;
   readyStart: boolean = false;
   csvContent: any[] = [];
   moderatorArray: any[] = [];
@@ -36,16 +38,29 @@ export class AppComponent {
   resultCost: number = 0;
 
   ngOnInit() {
+    window.localStorage.removeItem('moderatorArray');
+    window.localStorage.removeItem('recordingStudioArray');
+    window.localStorage.removeItem('postMixArray');
+    window.localStorage.removeItem('sideRecordingCombinationArray');
+    window.localStorage.removeItem('outboundInterviewWriterArray');
+    window.localStorage.removeItem('photographyArray');
+
     setTimeout(() => {
       this.readyStart = true;
-    }, 3000);
-    if (window.localStorage.getItem('moderatorArray')) {
-      this.moderatorArray = JSON.parse(window.localStorage.getItem('moderatorArray')!);
-      this.recordingStudioArray = JSON.parse(window.localStorage.getItem('recordingStudioArray')!);
-      this.postMixArray = JSON.parse(window.localStorage.getItem('postMixArray')!);
-      this.sideRecordingCombinationArray = JSON.parse(window.localStorage.getItem('sideRecordingCombinationArray')!);
-      this.outboundInterviewWriterArray = JSON.parse(window.localStorage.getItem('outboundInterviewWriterArray')!);
-      this.photographyArray = JSON.parse(window.localStorage.getItem('photographyArray')!);
+    }, 2000);
+    if (window.localStorage.getItem('moderatorArrayV2')) {
+      this.hasInitData = true;
+      setTimeout(() => {
+        this.slideText = true;
+      }, 2500);
+      this.moderatorArray = JSON.parse(window.localStorage.getItem('moderatorArrayV2')!);
+      this.recordingStudioArray = JSON.parse(window.localStorage.getItem('recordingStudioArrayV2')!);
+      this.postMixArray = JSON.parse(window.localStorage.getItem('postMixArrayV2')!);
+      this.sideRecordingCombinationArray = JSON.parse(window.localStorage.getItem('sideRecordingCombinationArrayV2')!);
+      this.outboundInterviewWriterArray = JSON.parse(window.localStorage.getItem('outboundInterviewWriterArrayV2')!);
+      this.photographyArray = JSON.parse(window.localStorage.getItem('photographyArrayV2')!);
+    } else {
+      this.hasInitData = false;
     }
   }
 
@@ -68,6 +83,10 @@ export class AppComponent {
     };
 
     reader.readAsArrayBuffer(file); // 讀取二進位數據
+    this.hasInitData = true;
+    setTimeout(() => {
+      this.slideText = true;
+    }, 500);
   }
 
   // 解析 CSV 內容
