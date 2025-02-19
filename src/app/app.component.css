@@ -38,6 +38,10 @@
   width: 100%;
 }
 
+.w-fit {
+  width: fit-content;
+}
+
 .w-60 {
   width: 60px;
 }
@@ -327,7 +331,7 @@
 
 .content2 {
   display: flex;
-  width: 100%;
+  width: 1100px;
   height: 360px;
   background-color: cadetblue;
   border-radius: 20px;

@@ -112,12 +112,12 @@ export class AppComponent {
             }
           }
         });
-        window.localStorage.setItem('moderatorArray', JSON.stringify(this.moderatorArray));
-        window.localStorage.setItem('recordingStudioArray', JSON.stringify(this.recordingStudioArray));
-        window.localStorage.setItem('postMixArray', JSON.stringify(this.postMixArray));
-        window.localStorage.setItem('sideRecordingCombinationArray', JSON.stringify(this.sideRecordingCombinationArray));
-        window.localStorage.setItem('outboundInterviewWriterArray', JSON.stringify(this.outboundInterviewWriterArray));
-        window.localStorage.setItem('photographyArray', JSON.stringify(this.photographyArray));
+        window.localStorage.setItem('moderatorArrayV2', JSON.stringify(this.moderatorArray));
+        window.localStorage.setItem('recordingStudioArrayV2', JSON.stringify(this.recordingStudioArray));
+        window.localStorage.setItem('postMixArrayV2', JSON.stringify(this.postMixArray));
+        window.localStorage.setItem('sideRecordingCombinationArrayV2', JSON.stringify(this.sideRecordingCombinationArray));
+        window.localStorage.setItem('outboundInterviewWriterArrayV2', JSON.stringify(this.outboundInterviewWriterArray));
+        window.localStorage.setItem('photographyArrayV2', JSON.stringify(this.photographyArray));
       }
     });
   }
