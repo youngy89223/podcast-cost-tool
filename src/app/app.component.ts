@@ -24,7 +24,6 @@ export class AppComponent {
   slideText: boolean = false;
   hasInitData: boolean = false;
   readyStart: boolean = false;
-  csvContent: any[] = [];
   moderatorArray: any[] = [];
   recordingStudioArray: any[] = [];
   postMixArray: any[] = [];
@@ -36,14 +35,18 @@ export class AppComponent {
   nowDateTime: string = '';
   startCalc: boolean = false;
   resultCost: number = 0;
+  refreshingSheet: boolean = false;
+  importingSheet: boolean = false;
+  sheetName: string = '';
+  error1: string = '';
 
   ngOnInit() {
-    window.localStorage.removeItem('moderatorArray');
-    window.localStorage.removeItem('recordingStudioArray');
-    window.localStorage.removeItem('postMixArray');
-    window.localStorage.removeItem('sideRecordingCombinationArray');
-    window.localStorage.removeItem('outboundInterviewWriterArray');
-    window.localStorage.removeItem('photographyArray');
+    window.localStorage.removeItem('moderatorArrayV2');
+    window.localStorage.removeItem('recordingStudioArrayV2');
+    window.localStorage.removeItem('postMixArrayV2');
+    window.localStorage.removeItem('sideRecordingCombinationArrayV2');
+    window.localStorage.removeItem('outboundInterviewWriterArrayV2');
+    window.localStorage.removeItem('photographyArrayV2');
 
     setTimeout(() => {
       this.readyStart = true;
@@ -52,74 +55,19 @@ export class AppComponent {
       this.hasInitData = true;
       setTimeout(() => {
         this.slideText = true;
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]') as any
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new (window as any).bootstrap.Tooltip(tooltipTriggerEl));
       }, 2500);
-      this.moderatorArray = JSON.parse(window.localStorage.getItem('moderatorArrayV2')!);
-      this.recordingStudioArray = JSON.parse(window.localStorage.getItem('recordingStudioArrayV2')!);
-      this.postMixArray = JSON.parse(window.localStorage.getItem('postMixArrayV2')!);
-      this.sideRecordingCombinationArray = JSON.parse(window.localStorage.getItem('sideRecordingCombinationArrayV2')!);
-      this.outboundInterviewWriterArray = JSON.parse(window.localStorage.getItem('outboundInterviewWriterArrayV2')!);
-      this.photographyArray = JSON.parse(window.localStorage.getItem('photographyArrayV2')!);
+      this.moderatorArray = JSON.parse(window.localStorage.getItem('moderatorArrayV3')!);
+      this.recordingStudioArray = JSON.parse(window.localStorage.getItem('recordingStudioArrayV3')!);
+      this.postMixArray = JSON.parse(window.localStorage.getItem('postMixArrayV3')!);
+      this.sideRecordingCombinationArray = JSON.parse(window.localStorage.getItem('sideRecordingCombinationArrayV3')!);
+      this.outboundInterviewWriterArray = JSON.parse(window.localStorage.getItem('outboundInterviewWriterArrayV3')!);
+      this.photographyArray = JSON.parse(window.localStorage.getItem('photographyArrayV3')!);
+      this.sheetName = window.localStorage.getItem('sheetName')!;
     } else {
       this.hasInitData = false;
     }
-  }
-
-  // 檔案選擇事件
-  onFileSelected(event: any): void {
-    window.localStorage.clear();
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    // 讀取檔案為二進位 (ArrayBuffer)
-    reader.onload = (e) => {
-      const arrayBuffer = reader.result as ArrayBuffer;
-
-      // 嘗試用 `TextDecoder` 解析不同編碼
-      const text = this.decodeANSI(arrayBuffer, "big5"); // 或 "windows-1252", "GB18030"
-
-      this.parseCSV(text);
-    };
-
-    reader.readAsArrayBuffer(file); // 讀取二進位數據
-    this.hasInitData = true;
-    setTimeout(() => {
-      this.slideText = true;
-    }, 500);
-  }
-
-  // 解析 CSV 內容
-  parseCSV(csvText: string): void {
-    Papa.parse(csvText, {
-      header: false,
-      skipEmptyLines: true,
-      complete: (result) => {
-        result.data.forEach((data: any, index) => {
-          if (index > 0) {
-            if (data[0] === 'A') {
-              this.moderatorArray.push({ code: data[1], name: data[2], cost: data[3] });
-            } else if (data[0] === 'B') {
-              this.recordingStudioArray.push({ code: data[1], name: data[2], cost: data[3] });
-            } else if (data[0] === 'C') {
-              this.postMixArray.push({ code: data[1], name: data[2], cost: data[3] });
-            } else if (data[0] === 'D') {
-              this.sideRecordingCombinationArray.push({ code: data[1], name: data[2], gender: { FeMale: { cost: data[3].split('-')[0].split(':')[1] }, Male: { cost: data[3].split('-')[1].split(':')[1] }} });
-            } else if (data[0] === 'E') {
-              this.outboundInterviewWriterArray.push({ code: data[1], name: data[2], cost: data[3] });
-            } else if (data[0] === 'F') {
-              this.photographyArray.push({ code: data[1], name: data[2], cost: data[3] });
-            }
-          }
-        });
-        window.localStorage.setItem('moderatorArrayV2', JSON.stringify(this.moderatorArray));
-        window.localStorage.setItem('recordingStudioArrayV2', JSON.stringify(this.recordingStudioArray));
-        window.localStorage.setItem('postMixArrayV2', JSON.stringify(this.postMixArray));
-        window.localStorage.setItem('sideRecordingCombinationArrayV2', JSON.stringify(this.sideRecordingCombinationArray));
-        window.localStorage.setItem('outboundInterviewWriterArrayV2', JSON.stringify(this.outboundInterviewWriterArray));
-        window.localStorage.setItem('photographyArrayV2', JSON.stringify(this.photographyArray));
-      }
-    });
   }
 
   // **手動解碼 ANSI / Big5 / GB18030 編碼**
@@ -150,7 +98,7 @@ export class AppComponent {
     this.resultCost += Number(this.moderatorSelect.nativeElement.value) + Number(this.recordingStudioSelect.nativeElement.value) + Number(this.postMixSelect.nativeElement.value) + Number(this.photographySelect.nativeElement.value);
     if (this.sideRecordingCombinationSelect.nativeElement.value !== '0') {
       this.sideRecordingCombinationArray.forEach((data) => {
-        if (data.code === this.sideRecordingCombinationSelect.nativeElement.value) {
+        if (data.name === this.sideRecordingCombinationSelect.nativeElement.value) {
           this.resultCost += Number(data.gender.FeMale.cost) * this.sideRecordingCombinationFM.nativeElement.value;
           this.resultCost += Number(data.gender.Male.cost) * this.sideRecordingCombinationM.nativeElement.value;
         }
@@ -170,5 +118,143 @@ export class AppComponent {
         toastBootstrap.show();
       }, 2000);
     }
+  }
+
+  async getSheetNames(sheetId: string) {
+    this.error1 = '';
+    try {
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP 錯誤: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      this.sheetName = data.properties.title;
+      window.localStorage.setItem('sheetName',data.properties.title);
+    } catch (error) {
+      this.error1 = '查無此表單 (請檢查表單ID是否正確)';
+    }
+  }
+
+  importSheet(sheetId: string) {
+    this.importingSheet = true;
+    this.getSheetDataFromGoogle(sheetId);
+  }
+
+  async getSheetDataFromGoogle(sheetId: string) {
+    window.localStorage.setItem('sheetId', sheetId);
+    const moderatorUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/主持人!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const moderatorRes = await fetch(moderatorUrl);
+    const moderatorData = await moderatorRes.json();
+    moderatorData.values.forEach((data: any, index: number) => {
+      if (index > 0) {
+        this.moderatorArray.push({ name: data[0], cost: data[1] });
+      }
+    });
+    window.localStorage.setItem('moderatorArrayV3', JSON.stringify(this.moderatorArray));
+
+    const recordingStudioUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/錄音室!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const recordingStudioRes = await fetch(recordingStudioUrl);
+    const recordingStudioData = await recordingStudioRes.json();
+    recordingStudioData.values.forEach((data: any, index: number) => {
+      if (index > 0) {
+        this.recordingStudioArray.push({ name: data[0], cost: data[1] });
+      }
+    });
+    window.localStorage.setItem('recordingStudioArrayV3', JSON.stringify(this.recordingStudioArray));
+
+    const postMixArrayUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/後製混音!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const postMixArrayRes = await fetch(postMixArrayUrl);
+    const postMixArrayData = await postMixArrayRes.json();
+    postMixArrayData.values.forEach((data: any, index: number) => {
+      if (index > 0) {
+        this.postMixArray.push({ name: data[0], cost: data[1] });
+      }
+    });
+    window.localStorage.setItem('postMixArrayV3', JSON.stringify(this.postMixArray));
+
+    const sideRecordingCombinationUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/梳化!A1:C1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const sideRecordingCombinationRes = await fetch(sideRecordingCombinationUrl);
+    const sideRecordingCombinationData = await sideRecordingCombinationRes.json();
+    sideRecordingCombinationData.values.forEach((data: any, index: number) => {
+      if (index > 0) {
+        if (data[0]) {
+          if (data[1] === 'FM') {
+            this.sideRecordingCombinationArray.push({ name: data[0], gender: { FeMale: { cost: data[2] } } });
+          } else if (data[1] === 'M') {
+            this.sideRecordingCombinationArray.push({ name: data[0], gender: { Male: { cost: data[2] } } });
+          }
+        } else {
+          if (data[1] === 'FM') {
+            this.sideRecordingCombinationArray[this.sideRecordingCombinationArray.length - 1].gender.FeMale =  { cost: data[2] };
+          } else if (data[1] === 'M') {
+            this.sideRecordingCombinationArray[this.sideRecordingCombinationArray.length - 1].gender.Male = { cost: data[2] };
+          }
+        }
+      }
+    });
+    window.localStorage.setItem('sideRecordingCombinationArrayV3', JSON.stringify(this.sideRecordingCombinationArray));
+
+    const outboundInterviewWriterUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/訪綱寫手!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const outboundInterviewWriterRes = await fetch(outboundInterviewWriterUrl);
+    const outboundInterviewWriterData = await outboundInterviewWriterRes.json();
+    outboundInterviewWriterData.values.forEach((data: any, index: number) => {
+      if (index > 0) {
+        this.outboundInterviewWriterArray.push({ name: data[0], cost: data[1] });
+      }
+    });
+    window.localStorage.setItem('outboundInterviewWriterArrayV3', JSON.stringify(this.outboundInterviewWriterArray));
+
+    const photographyUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/平面攝影!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const photographyRes = await fetch(photographyUrl);
+    const photographyData = await photographyRes.json();
+    photographyData.values.forEach((data: any, index: number) => {
+      if (index > 0) {
+        this.photographyArray.push({ name: data[0], cost: data[1] });
+      }
+    });
+    window.localStorage.setItem('photographyArrayV3', JSON.stringify(this.photographyArray));
+    this.hasInitData = true;
+    this.refreshingSheet = false;
+    this.importingSheet = false;
+    setTimeout(() => {
+      this.slideText = true;
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]') as any
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new (window as any).bootstrap.Tooltip(tooltipTriggerEl));
+    }, 500);
+  }
+
+  refreshSheet() {
+    this.refreshingSheet = true;
+    this.moderatorArray = [];
+    this.recordingStudioArray = [];
+    this.postMixArray = [];
+    this.sideRecordingCombinationArray = [];
+    this.outboundInterviewWriterArray = [];
+    this.photographyArray = [];
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+      const tooltip = (window as any).bootstrap.Tooltip.getInstance(el);
+      if (tooltip) {
+          tooltip.dispose();
+      }
+    });
+    this.getSheetDataFromGoogle(window.localStorage.getItem('sheetId')!);
+  }
+
+  importNew() {
+    this.moderatorArray = [];
+    this.recordingStudioArray = [];
+    this.postMixArray = [];
+    this.sideRecordingCombinationArray = [];
+    this.outboundInterviewWriterArray = [];
+    this.photographyArray = [];
+    this.sheetName = '';
+    this.hasInitData = false;
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+      const tooltip = (window as any).bootstrap.Tooltip.getInstance(el);
+      if (tooltip) {
+          tooltip.dispose();
+      }
+    });
   }
 }

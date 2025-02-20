@@ -1,19 +1,25 @@
 <div [class.content1]="!hasInitData" class="transition-1 bg-aliceblue">
-  <div [class.content2]="!hasInitData">
+  <div [class.content2]="!hasInitData" [class.shining]="importingSheet">
     <div *ngIf="!hasInitData || (hasInitData && readyStart)" [class.w-fit]="!hasInitData" [class.mr-50]="!hasInitData" [class.box-img]="!hasInitData" [class.pd-50-20]="hasInitData" class="transition-1 flex">
-      <img [class.box-img]="!hasInitData" [class.w-300]="!hasInitData" [class.w-60]="hasInitData" class="br-10 transition-1" src="/podcast-cost-tool/assets/img/logo.jpg" />
+      <img [class.box-img]="!hasInitData" [class.w-300]="!hasInitData" [class.w-60]="hasInitData" class="br-10 transition-1" src="/podcast-cost-tool/assets/img/logo.svg" />
       <h2 *ngIf="hasInitData" class="title-1 slide-text" [class.show]="slideText">PODCAST COST TOOL</h2>
     </div>
     <div *ngIf="!hasInitData" class="w-70-p bounceIn">
       <h1 class="mb-20">建立成本對照表</h1>
       <div class="content3">
-        <h4 class="bounceIn animation-delay2">從我的檔案匯入</h4>
-        <input type="file" class="form-control mb-40 bounceIn animation-delay2" (change)="onFileSelected($event)" accept=".csv" />
         <h4 class="bounceIn animation-delay4">從Google表單匯入</h4>
-        <div class="flex w-full bounceIn animation-delay4">
-          <p class="mb-0 mr-10 flex align-items-center w-10-p">表單id</p>
-          <input type="text" placeholder="敬請期待功能開放" disabled class="form-control w-80-p mr-10" (change)="onFileSelected($event)" accept=".csv" />
-          <button class="form-control w-10-p" disabled>送出</button>
+        <div class="flex w-full bounceIn animation-delay4 mb-20">
+          <p class="mb-0 mr-10 flex align-items-center w-5-p fs-25 blod">ID</p>
+          <input type="text" class="form-control w-80-p mr-10" value="1LkJg3P4RQGlNwFggYHzV0lAC4F8soFUIyIGaUdwsoZM" [disabled]="sheetName" #googleSheetId />
+          <button *ngIf="!sheetName" class="form-control w-15-p" (click)="getSheetNames(googleSheetId.value)">檢查表單</button>
+        </div>
+        <div *ngIf="sheetName" class="flex fade-in-down">
+          <p class="mb-0 fs-25 blod w-64-p mr-10">表單名稱：{{ sheetName }}</p>
+          <button class="form-control w-10-p mr-6" (click)="importSheet(googleSheetId.value)">匯入</button>
+          <button class="form-control w-10-p" (click)="sheetName = ''">返回</button>
+        </div>
+        <div *ngIf="error1" class="flex fade-in-down">
+          <p class="mb-0 fs-25 blod">錯誤：{{ error1 }}</p>
         </div>
       </div>
     </div>
@@ -26,10 +32,19 @@
     <div class="loading-bar-div3 zoomUp3 transition-delay3"></div>
   </div>
   <div *ngIf="readyStart" class="h-full flex align-items-center justify-content-center box overflow-auto h-84-vh bounceIn">
-    <div class="w-50-p h-full border-right pr-20px flex flex-direction-column">
-      <h2 class="bounceIn animation-delay2 color-cadetblue blod">成本對照表</h2>
-      <ng-container *ngIf="moderatorArray.length > 0">
-        <ul class="nav nav-tabs fade-in-down animation-delay6 mb-20" id="myTab" role="tablist">
+    <div class="w-50-p h-full border-right pr-20px flex flex-direction-column position-relative">
+      <div class="flex justify-content-between">
+        <div class="flex">
+          <h2 class="bounceIn animation-delay2 color-cadetblue blod">成本對照表</h2>
+          <h6 class="flex align-items-center bounceIn animation-delay2 color-cadetblue blod">({{ sheetName }})</h6>
+        </div>
+        <div>
+          <img role="button" src="/podcast-cost-tool/assets/img/rotate.svg" class="rotateBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="重新抓取目前表單資料" (click)="refreshSheet()" />
+          <img role="button" src="/podcast-cost-tool/assets/img/plus.svg" class="plusBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="匯入新表單" (click)="importNew()" />
+        </div>
+      </div>
+      <ng-container *ngIf="readyStart">
+        <ul *ngIf="!refreshingSheet" class="nav nav-tabs fade-in-down animation-delay6 mb-20" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="moderator-tab" data-bs-toggle="tab" data-bs-target="#moderator-tab-pane" type="button" role="tab" aria-controls="moderator-tab-pane" aria-selected="true">主持人</button>
           </li>
@@ -49,7 +64,12 @@
             <button class="nav-link" id="photography-tab" data-bs-toggle="tab" data-bs-target="#photography-tab-pane" type="button" role="tab" aria-controls="photography-tab-pane" aria-selected="false">平面攝影</button>
           </li>
         </ul>
-        <div class="tab-content h-full fade-in-down animation-delay6 overflow-auto" id="myTabContent">
+        <div *ngIf="refreshingSheet" class="w-full h-full flex-center position-absolute -top-50">
+          <div class="loading-bar-div1 zoomUp1 transition-delay1"></div>
+          <div class="loading-bar-div2 zoomUp2 transition-delay2"></div>
+          <div class="loading-bar-div3 zoomUp3 transition-delay3"></div>
+        </div>
+        <div *ngIf="moderatorArray.length > 0 && !refreshingSheet" class="tab-content h-full fade-in-down animation-delay6 overflow-auto" id="myTabContent">
           <div class="tab-pane fade show active" id="moderator-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
             <table class="table table-striped">
               <thead><th></th><th scope="col">主持人</th><th scope="col">成本</th></thead>
@@ -104,7 +124,7 @@
         </div>
       </ng-container>
     </div>
-    <div *ngIf="moderatorArray.length > 0" class="w-50-p h-full bounceIn animation-delay4 ml-20 position-relative">
+    <div class="w-50-p h-full bounceIn animation-delay4 ml-20 position-relative">
       <h2 *ngIf="!startCalc" class="color-cadetblue blod">設定成本內容</h2>
       <h2 *ngIf="startCalc" class="color-cadetblue blod">計算中...</h2>
       <div class="box2 mb-20" [class.opacity-3]="startCalc">
@@ -115,13 +135,13 @@
           </ng-container>
         </select>
         <h5 class="color-cadetblue blod">錄音室</h5>
-        <select class="form-control mb-20" #recordingStudioSelect [disabled]="startCalc">
+        <select class="form-control mb-20" #recordingStudioSelect [disabled]="startCalc || refreshingSheet">
           <ng-container *ngFor="let recordingStudio of recordingStudioArray">
             <option [value]="recordingStudio.cost">{{ recordingStudio.name }}</option>
           </ng-container>
         </select>
         <h5 class="color-cadetblue blod">後制混音</h5>
-        <select class="form-control mb-20" #postMixSelect [disabled]="startCalc">
+        <select class="form-control mb-20" #postMixSelect [disabled]="startCalc || refreshingSheet">
           <option value="0">無</option>
           <ng-container *ngFor="let postMix of postMixArray">
             <option [value]="postMix.cost">{{ postMix.name }}</option>
@@ -129,20 +149,20 @@
         </select>
         <h5 class="color-cadetblue blod">側錄梳化</h5>
         <div class="flex">
-          <select class="form-control mb-20" (change)="sideRecordingCombinationChange(sideRecordingCombinationSelect.value)" [disabled]="startCalc" #sideRecordingCombinationSelect>
+          <select class="form-control mb-20" (change)="sideRecordingCombinationChange(sideRecordingCombinationSelect.value)" [disabled]="startCalc || refreshingSheet" #sideRecordingCombinationSelect>
             <option value="0">無</option>
             <ng-container *ngFor="let sideRecordingCombination of sideRecordingCombinationArray">
-              <option [value]="sideRecordingCombination.code">{{ sideRecordingCombination.name }}</option>
+              <option [value]="sideRecordingCombination.name">{{ sideRecordingCombination.name }}</option>
             </ng-container>
           </select>
           <ng-container *ngIf="showGenderCount">
             <div class="flex mb-20 ml-20">
               <div class="flex align-items-center">
-                <input class="form-control w-70" type="number" value="0" [disabled]="startCalc" #sideRecordingCombinationFM />
+                <input class="form-control w-70" type="number" value="0" [disabled]="startCalc || refreshingSheet" #sideRecordingCombinationFM />
                 <p class="mb-0 ml-10">女</p>
               </div>
               <div class="flex align-items-center">
-                <input class="form-control ml-20 w-70" type="number" value="0" [disabled]="startCalc" #sideRecordingCombinationM />
+                <input class="form-control ml-20 w-70" type="number" value="0" [disabled]="startCalc || refreshingSheet" #sideRecordingCombinationM />
                 <p class="mb-0 ml-10">男</p>
               </div>
             </div>
@@ -150,7 +170,7 @@
         </div>
         <h5 class="color-cadetblue blod">訪綱</h5>
         <div class="flex">
-          <select class="form-control mb-20" (change)="outboundInterviewWriterChange(outboundInterviewWriterSelect.value)" [disabled]="startCalc" #outboundInterviewWriterSelect>
+          <select class="form-control mb-20" (change)="outboundInterviewWriterChange(outboundInterviewWriterSelect.value)" [disabled]="startCalc || refreshingSheet" #outboundInterviewWriterSelect>
             <option value="0">無</option>
             <ng-container *ngFor="let outboundInterviewWriter of outboundInterviewWriterArray">
               <option [value]="outboundInterviewWriter.cost">{{ outboundInterviewWriter.name }}</option>
@@ -158,13 +178,13 @@
           </select>
           <ng-container *ngIf="showOutboundInterviewCount">
             <div class="flex align-items-center mb-20 ml-20">
-              <input class="form-control w-70" type="number" value="0" [disabled]="startCalc" #outboundInterviewWriterCount />
+              <input class="form-control w-70" type="number" value="0" [disabled]="startCalc || refreshingSheet" #outboundInterviewWriterCount />
               <p class="mb-0 ml-10">集</p>
             </div>
           </ng-container>
         </div>
         <h5 class="color-cadetblue blod">平面攝影</h5>
-        <select class="form-control mb-20" [disabled]="startCalc" #photographySelect>
+        <select class="form-control mb-20" [disabled]="startCalc || refreshingSheet" #photographySelect>
           <option value="0">無</option>
           <ng-container *ngFor="let photography of photographyArray">
             <option [value]="photography.cost">{{ photography.name }}</option>
