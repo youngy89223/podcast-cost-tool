@@ -20,6 +20,12 @@ export class AppComponent {
   @ViewChild('outboundInterviewWriterSelect', { static: false }) outboundInterviewWriterSelect: ElementRef | any;
   @ViewChild('outboundInterviewWriterCount', { static: false }) outboundInterviewWriterCount: ElementRef | any;
   @ViewChild('photographySelect', { static: false }) photographySelect: ElementRef | any;
+
+  @ViewChild('addSingleCloumName', { static: false }) addSingleCloumName: ElementRef | any;
+  @ViewChild('addSingleCloumCost', { static: false }) addSingleCloumCost: ElementRef | any;
+  @ViewChild('addSingleCloumFeMaleCost', { static: false }) addSingleCloumFeMaleCost: ElementRef | any;
+  @ViewChild('addSingleCloumMaleCost', { static: false }) addSingleCloumMaleCost: ElementRef | any;
+
   title = 'podcast-cost-calc';
   slideText: boolean = false;
   hasInitData: boolean = false;
@@ -39,6 +45,7 @@ export class AppComponent {
   importingSheet: boolean = false;
   sheetName: string = '';
   error1: string = '';
+  singleAddRowEditing: boolean = false;
 
   ngOnInit() {
     window.localStorage.removeItem('moderatorArrayV2');
@@ -51,7 +58,7 @@ export class AppComponent {
     setTimeout(() => {
       this.readyStart = true;
     }, 2000);
-    if (window.localStorage.getItem('moderatorArrayV2')) {
+    if (window.localStorage.getItem('moderatorArrayV3')) {
       this.hasInitData = true;
       setTimeout(() => {
         this.slideText = true;
@@ -256,5 +263,204 @@ export class AppComponent {
           tooltip.dispose();
       }
     });
+  }
+
+  checkEditStatus(type: string, i: number) {
+    if (type === 'moderator') {
+      this.moderatorArray.forEach((data: any, index) => {
+        if (index !== i) {
+          data.edit = '';
+        }
+      });
+    } else if (type === 'recordingStudio') {
+      this.recordingStudioArray.forEach((data: any, index) => {
+        if (index !== i) {
+          data.edit = '';
+        }
+      });
+    } else if (type === 'postMix') {
+      this.postMixArray.forEach((data: any, index) => {
+        if (index !== i) {
+          data.edit = '';
+        }
+      });
+    } else if (type === 'sideRecordingCombination') {
+      this.sideRecordingCombinationArray.forEach((data: any, index) => {
+        if (index !== i) {
+          data.edit = '';
+          data.gender.FeMale.edit = '';
+          data.gender.Male.edit = '';
+        }
+      });
+    } else if (type === 'outboundInterviewWriter') {
+      this.outboundInterviewWriterArray.forEach((data: any, index) => {
+        if (index !== i) {
+          data.edit = '';
+        }
+      });
+    } else if (type === 'photography') {
+      this.photographyArray.forEach((data: any, index) => {
+        if (index !== i) {
+          data.edit = '';
+        }
+      });
+    }
+  }
+
+  async updateSheet() {
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwmk1w8viUXBVqggSD7tTpWahs__YEnYdwHVbXgfoeJjvXQS_z2_RZGdsUUh3xeZ7HU/exec'
+    const response = await fetch(API_URL, {
+      method: "POST", // Apps Script 可支援 GET 或 POST
+    });
+
+    const data = await response.text();
+    console.log("API 回應:", data);
+  }
+
+  clearEditing() {
+    this.singleAddRowEditing = false;
+    this.moderatorArray.forEach((data: any) => {
+      data.edit = '';
+      if (data.singleAddRowEdit) {
+        data.singleAddRowEdit = false;
+        this.moderatorArray = this.moderatorArray.slice(0, -1);
+      }
+    });
+    this.recordingStudioArray.forEach((data: any) => {
+      data.edit = '';
+      if (data.singleAddRowEdit) {
+        data.singleAddRowEdit = false;
+        this.recordingStudioArray = this.recordingStudioArray.slice(0, -1);
+      }
+    });
+    this.postMixArray.forEach((data: any) => {
+        data.edit = '';
+        if (data.singleAddRowEdit) {
+          data.singleAddRowEdit = false;
+          this.postMixArray = this.postMixArray.slice(0, -1);
+        }
+    });
+    this.sideRecordingCombinationArray.forEach((data: any) => {
+      data.edit = '';
+      data.gender.FeMale.edit = '';
+      data.gender.Male.edit = '';
+      if (data.singleAddRowEdit) {
+        data.singleAddRowEdit = false;
+        this.sideRecordingCombinationArray = this.sideRecordingCombinationArray.slice(0, -1);
+      }
+    });
+    this.outboundInterviewWriterArray.forEach((data: any) => {
+      data.edit = '';
+      if (data.singleAddRowEdit) {
+        data.singleAddRowEdit = false;
+        this.outboundInterviewWriterArray = this.outboundInterviewWriterArray.slice(0, -1);
+      }
+    });
+    this.photographyArray.forEach((data: any) => {
+      data.edit = '';
+      if (data.singleAddRowEdit) {
+        data.singleAddRowEdit = false;
+        this.photographyArray = this.photographyArray.slice(0, -1);
+      }
+    });
+  }
+
+  saveSingleCloum(type: string, data: any, position: string, value: any) {
+    if (data.name !== value && position.substring(0, 1) === 'A') {
+      data.name = value;
+    } else {
+      if (data.cost !== value) {
+        data.cost = value;
+      }
+    }
+
+    if (type === 'moderator') {
+      window.localStorage.setItem('moderatorArrayV3', JSON.stringify(this.moderatorArray));
+    } else if (type === 'recordingStudio') {
+      window.localStorage.setItem('recordingStudioArrayV3', JSON.stringify(this.recordingStudioArray));
+    } else if (type === 'postMix') {
+      window.localStorage.setItem('postMixArrayV3', JSON.stringify(this.postMixArray));
+    } else if (type === 'sideRecordingCombination') {
+      window.localStorage.setItem('sideRecordingCombinationArrayV3', JSON.stringify(this.sideRecordingCombinationArray));
+    } else if (type === 'outboundInterviewWriter') {
+      window.localStorage.setItem('outboundInterviewWriterArrayV3', JSON.stringify(this.outboundInterviewWriterArray));
+    } else if (type === 'photography') {
+      window.localStorage.setItem('photographyArrayV3', JSON.stringify(this.photographyArray));
+    }
+  }
+
+  addRow(type: string) {
+    this.singleAddRowEditing = true;
+    if (type === 'moderator') {
+      this.moderatorArray.push({ name: '', cost: '', singleAddRowEdit: true });
+    } else if (type === 'recordingStudio') {
+      this.recordingStudioArray.push({ name: '', cost: '', singleAddRowEdit: true });
+    } else if (type === 'postMix') {
+      this.postMixArray.push({ name: '', cost: '', singleAddRowEdit: true });
+    } else if (type === 'sideRecordingCombination') {
+      this.sideRecordingCombinationArray.push({ name: '', gender: { FeMale: { cost: '' }, Male: { cost: '' } }, singleAddRowEdit: true });
+    } else if (type === 'outboundInterviewWriter') {
+      this.outboundInterviewWriterArray.push({ name: '', cost: '', singleAddRowEdit: true });
+    } else if (type === 'photography') {
+      this.photographyArray.push({ name: '', cost: '', singleAddRowEdit: true });
+    }
+  }
+
+  cancelAddRow(type: string) {
+    this.singleAddRowEditing = false;
+    if (type === 'moderator') {
+      this.moderatorArray = this.moderatorArray.slice(0, -1);
+    } else if (type === 'recordingStudio') {
+      this.recordingStudioArray = this.recordingStudioArray.slice(0, -1);
+    } else if (type === 'postMix') {
+      this.postMixArray = this.postMixArray.slice(0, -1);
+    } else if (type === 'sideRecordingCombination') {
+      this.sideRecordingCombinationArray = this.sideRecordingCombinationArray.slice(0, -1);
+    } else if (type === 'outboundInterviewWriter') {
+      this.outboundInterviewWriterArray = this.outboundInterviewWriterArray.slice(0, -1);
+    } else if (type === 'photography') {
+      this.photographyArray = this.photographyArray.slice(0, -1);
+    }
+
+  }
+
+  confirmAddRow(type: string) {
+    if (type === 'moderator') {
+      this.moderatorArray[this.moderatorArray.length - 1].name = this.addSingleCloumName.nativeElement.value;
+      this.moderatorArray[this.moderatorArray.length - 1].cost = this.addSingleCloumCost.nativeElement.value;
+      this.moderatorArray[this.moderatorArray.length - 1].singleAddRowEdit = false;
+      window.localStorage.setItem('moderatorArrayV3', JSON.stringify(this.moderatorArray));
+    } else if (type === 'recordingStudio') {
+      this.recordingStudioArray[this.recordingStudioArray.length - 1].name = this.addSingleCloumName.nativeElement.value;
+      this.recordingStudioArray[this.recordingStudioArray.length - 1].cost = this.addSingleCloumCost.nativeElement.value;
+      this.recordingStudioArray[this.recordingStudioArray.length - 1].singleAddRowEdit = false;
+      window.localStorage.setItem('recordingStudioArrayV3', JSON.stringify(this.recordingStudioArray));
+    } else if (type === 'postMix') {
+      this.postMixArray[this.postMixArray.length - 1].name = this.addSingleCloumName.nativeElement.value;
+      this.postMixArray[this.postMixArray.length - 1].cost = this.addSingleCloumCost.nativeElement.value;
+      this.postMixArray[this.postMixArray.length - 1].singleAddRowEdit = false;
+      window.localStorage.setItem('postMixArrayV3', JSON.stringify(this.postMixArray));
+    } else if (type === 'sideRecordingCombination') {
+      this.sideRecordingCombinationArray[this.sideRecordingCombinationArray.length - 1].name = this.addSingleCloumName.nativeElement.value;
+      this.sideRecordingCombinationArray[this.sideRecordingCombinationArray.length - 1].gender.FeMale.cost = this.addSingleCloumFeMaleCost.nativeElement.value;
+      this.sideRecordingCombinationArray[this.sideRecordingCombinationArray.length - 1].gender.Male.cost = this.addSingleCloumMaleCost.nativeElement.value;
+      this.sideRecordingCombinationArray[this.sideRecordingCombinationArray.length - 1].singleAddRowEdit = false;
+      window.localStorage.setItem('sideRecordingCombinationArrayV3', JSON.stringify(this.sideRecordingCombinationArray));
+    } else if (type === 'outboundInterviewWriter') {
+      this.outboundInterviewWriterArray[this.outboundInterviewWriterArray.length - 1].name = this.addSingleCloumName.nativeElement.value;
+      this.outboundInterviewWriterArray[this.outboundInterviewWriterArray.length - 1].cost = this.addSingleCloumCost.nativeElement.value;
+      this.outboundInterviewWriterArray[this.outboundInterviewWriterArray.length - 1].singleAddRowEdit = false;
+      window.localStorage.setItem('outboundInterviewWriterArrayV3', JSON.stringify(this.outboundInterviewWriterArray));
+    } else if (type === 'photography') {
+      this.photographyArray[this.photographyArray.length - 1].name = this.addSingleCloumName.nativeElement.value;
+      this.photographyArray[this.photographyArray.length - 1].cost = this.addSingleCloumCost.nativeElement.value;
+      this.photographyArray[this.photographyArray.length - 1].singleAddRowEdit = false;
+      window.localStorage.setItem('photographyArrayV3', JSON.stringify(this.photographyArray));
+    }
+    this.singleAddRowEditing = false;
+  }
+
+  deleteRow() {
+
   }
 }

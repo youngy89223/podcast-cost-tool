@@ -30,6 +30,10 @@
   height: 100%;
 }
 
+.h-24 {
+  height: 24px;
+}
+
 .h-84-vh {
   height: 84vh;
 }
@@ -46,12 +50,32 @@
   width: fit-content;
 }
 
+.w-15 {
+  width: 15px;
+}
+
+.w-20-i {
+  width: 20px !important;
+}
+
 .w-60 {
   width: 60px;
 }
 
+.w-65 {
+  width: 65px;
+}
+
 .w-70 {
   width: 70px;
+}
+
+.w-90 {
+  width: 90px;
+}
+
+.w-200 {
+  width: 200px;
 }
 
 .w-300 {
@@ -92,6 +116,10 @@
 
 .overflow-auto {
   overflow: auto;
+}
+
+.padding-0 {
+  padding: 0;
 }
 
 .pd-0-50 {
@@ -324,6 +352,10 @@
   margin-left: 20px;
 }
 
+.mr-0-i {
+  margin-right: 0px !important;
+}
+
 .mr-6 {
   margin-right: 6px;
 }
@@ -350,6 +382,10 @@
 
 .mb-40 {
   margin-bottom: 40px;
+}
+
+.opacity-0 {
+  opacity: 0;
 }
 
 .opacity-3 {
@@ -454,11 +490,12 @@
 }
 
 .slide-text.show {
-    left: 0;
-    opacity: 1;
+  left: 0;
+  opacity: 1;
 }
 
 .rotateBtn {
+  opacity: 0.4;
   width: 25px;
   margin-right: 20px;
   transition: all 0.5s ease;
@@ -473,6 +510,7 @@
 }
 
 .plusBtn {
+  opacity: 0.4;
   width: 25px;
   transition: all 0.5s ease;
 }
@@ -483,4 +521,75 @@
 
 .plusBtn:active {
   transform: rotate(180deg) scale(0.6);
+}
+
+.penShow {
+  opacity: 0;
+  width: 15px;
+  transition: opacity 0.5s ease;
+}
+
+.penShowTd:hover .penShow {
+  opacity: 0.4;
+}
+
+.confirmShow {
+  opacity: 0.4;
+  width: 15px;
+  margin-right: 5px;
+}
+
+.cancelShow {
+  position: absolute;
+  opacity: 0.4;
+  width: 15px;
+  top: 12px;
+  right: 10px;
+}
+
+.deleteShow {
+  display: none;
+  opacity: 0.4;
+  margin-bottom: 1px;
+  width: 15px;
+  transition: opacity 0.5s ease;
+}
+
+.deleteShowTh:hover .deleteShow {
+  display: inline;
+}
+
+.addRowShow {
+  opacity: 0;
+  width: 20px;
+  margin-bottom: 5px;
+  transition: opacity 0.5s ease;
+}
+
+.addRowTd:hover .addRowShow {
+  opacity: 0.4;
+}
+
+.addRowTd {
+  text-align: center;
+  --bs-table-bg-type: #ffffff !important;
+  border: none;
+}
+
+.vertical-align-middle{
+  vertical-align: middle;
+}
+
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.hoverHide {
+  display: inline;
+}
+
+.hoverHideTh:hover .hoverHide {
+  display: none;
 }
