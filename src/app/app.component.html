@@ -1,7 +1,7 @@
 <div [class.content1]="!hasInitData" class="transition-1 bg-aliceblue">
   <div [class.content2]="!hasInitData" [class.shining]="importingSheet">
     <div *ngIf="!hasInitData || (hasInitData && readyStart)" [class.w-fit]="!hasInitData" [class.mr-50]="!hasInitData" [class.box-img]="!hasInitData" [class.pd-50-20]="hasInitData" class="transition-1 flex">
-      <img [class.box-img]="!hasInitData" [class.w-300]="!hasInitData" [class.w-60]="hasInitData" class="br-10 transition-1" src="/assets/img/logo.svg" />
+      <img [class.box-img]="!hasInitData" [class.w-300]="!hasInitData" [class.w-60]="hasInitData" class="br-10 transition-1" src="/podcast-cost-tool/assets/img/logo.svg" />
       <h2 *ngIf="hasInitData" class="title-1 slide-text" [class.show]="slideText">PODCAST COST TOOL</h2>
     </div>
     <div *ngIf="!hasInitData" class="w-70-p bounceIn">
@@ -39,8 +39,8 @@
           <h6 class="flex align-items-center bounceIn animation-delay2 color-cadetblue blod">({{ sheetName }})</h6>
         </div>
         <div>
-          <img role="button" src="/assets/img/rotate.svg" class="rotateBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="重新抓取目前表單資料" (click)="refreshSheet()" />
-          <img role="button" src="/assets/img/plus.svg" class="plusBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="匯入新表單" (click)="importNew()" />
+          <img role="button" src="/podcast-cost-tool/assets/img/rotate.svg" class="rotateBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="重新抓取目前表單資料" (click)="refreshSheet()" />
+          <img role="button" src="/podcast-cost-tool/assets/img/plus.svg" class="plusBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="匯入新表單" (click)="importNew()" />
         </div>
       </div>
       <ng-container *ngIf="readyStart">
@@ -78,21 +78,21 @@
                   <th scope="row" class="deleteShowTh hoverHideTh vertical-align-middle">
                     <span *ngIf="singleAddRowEditing && !moderator.singleAddRowEdit">{{ i + 1 }}</span>
                     <span *ngIf="!singleAddRowEditing" class="hoverHide">{{ i + 1 }}</span>
-                    <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
-                    <img *ngIf="moderator.singleAddRowEdit" role="button" src="/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('moderator'); moderator.singleAddRowEdit = false" />
+                    <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
+                    <img *ngIf="moderator.singleAddRowEdit" role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('moderator'); moderator.singleAddRowEdit = false" />
                   </th>
                   <td class="penShowTd vertical-align-middle">
                     <div *ngIf="!moderator.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="moderator.edit !== 'name'">
                         {{ moderator.name }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="moderator.edit = 'name'; checkEditStatus('moderator', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="moderator.edit = 'name'; checkEditStatus('moderator', i)">
                       </ng-container>
                       <ng-container *ngIf="moderator.edit === 'name'">
                         <div class="position-relative w-full mr-10">
                           <input type="text" class="form-control" [value]="moderator.name" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="moderator.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="moderator.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow"  (click)="moderator.edit = ''; saveSingleCloum('moderator', moderator, 'A' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow"  (click)="moderator.edit = ''; saveSingleCloum('moderator', moderator, 'A' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="moderator.singleAddRowEdit">
@@ -105,29 +105,29 @@
                     <div *ngIf="!moderator.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="moderator.edit !== 'cost'">
                         NT {{ moderator.cost }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="moderator.edit = 'cost'; checkEditStatus('moderator', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="moderator.edit = 'cost'; checkEditStatus('moderator', i)">
                       </ng-container>
                       <ng-container *ngIf="moderator.edit === 'cost'">
                         <div class="position-relative flex align-items-center mr-10">
                           <span class="mr-10">NT</span>
                           <input type="number" class="form-control no-spinner" [value]="moderator.cost" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="moderator.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="moderator.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow" (click)="moderator.edit = ''; saveSingleCloum('moderator', moderator, 'B' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow" (click)="moderator.edit = ''; saveSingleCloum('moderator', moderator, 'B' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="moderator.singleAddRowEdit" class="flex justify-content-between">
                       <div class="position-relative flex align-items-center mr-10">
                         <span class="mr-10">NT</span>
                         <input type="number" class="form-control no-spinner mr-10" #addSingleCloumCost />
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('moderator')" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('moderator')" />
                       </div>
                     </div>
                   </td>
                 </tr>
                 <tr *ngIf="!singleAddRowEditing">
                   <td colspan="3" class="addRowTd">
-                    <img role="button" src="/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('moderator')" />
+                    <img role="button" src="/podcast-cost-tool/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('moderator')" />
                   </td>
                 </tr>
               </tbody>
@@ -141,21 +141,21 @@
                   <th scope="row" class="deleteShowTh hoverHideTh vertical-align-middle">
                     <span *ngIf="singleAddRowEditing && !recordingStudio.singleAddRowEdit">{{ i + 1 }}</span>
                     <span *ngIf="!singleAddRowEditing" class="hoverHide">{{ i + 1 }}</span>
-                    <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
-                    <img *ngIf="recordingStudio.singleAddRowEdit" role="button" src="/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('recordingStudio'); recordingStudio.singleAddRowEdit = false" />
+                    <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
+                    <img *ngIf="recordingStudio.singleAddRowEdit" role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('recordingStudio'); recordingStudio.singleAddRowEdit = false" />
                   </th>
                   <td class="penShowTd vertical-align-middle">
                     <div *ngIf="!recordingStudio.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="recordingStudio.edit !== 'name'">
                         {{ recordingStudio.name }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="recordingStudio.edit = 'name'; checkEditStatus('recordingStudio', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="recordingStudio.edit = 'name'; checkEditStatus('recordingStudio', i)">
                       </ng-container>
                       <ng-container *ngIf="recordingStudio.edit === 'name'">
                         <div class="position-relative w-full mr-10">
                           <input type="text" class="form-control" [value]="recordingStudio.name" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="recordingStudio.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="recordingStudio.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow"  (click)="recordingStudio.edit = ''; saveSingleCloum('recordingStudio', recordingStudio, 'A' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow"  (click)="recordingStudio.edit = ''; saveSingleCloum('recordingStudio', recordingStudio, 'A' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="recordingStudio.singleAddRowEdit">
@@ -168,29 +168,29 @@
                     <div *ngIf="!recordingStudio.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="recordingStudio.edit !== 'cost'">
                         NT {{ recordingStudio.cost }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="recordingStudio.edit = 'cost'; checkEditStatus('recordingStudio', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="recordingStudio.edit = 'cost'; checkEditStatus('recordingStudio', i)">
                       </ng-container>
                       <ng-container *ngIf="recordingStudio.edit === 'cost'">
                         <div class="position-relative flex align-items-center mr-10">
                           <span class="mr-10">NT</span>
                           <input type="number" class="form-control no-spinner" [value]="recordingStudio.cost" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="recordingStudio.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="recordingStudio.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow" (click)="recordingStudio.edit = ''; saveSingleCloum('recordingStudio', recordingStudio, 'B' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow" (click)="recordingStudio.edit = ''; saveSingleCloum('recordingStudio', recordingStudio, 'B' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="recordingStudio.singleAddRowEdit" class="flex justify-content-between">
                       <div class="position-relative flex align-items-center mr-10">
                         <span class="mr-10">NT</span>
                         <input type="number" class="form-control no-spinner mr-10" #addSingleCloumCost />
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('recordingStudio')" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('recordingStudio')" />
                       </div>
                     </div>
                   </td>
                 </tr>
                 <tr *ngIf="!singleAddRowEditing">
                   <td colspan="3" class="addRowTd">
-                    <img role="button" src="/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('recordingStudio')" />
+                    <img role="button" src="/podcast-cost-tool/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('recordingStudio')" />
                   </td>
                 </tr>
               </tbody>
@@ -204,21 +204,21 @@
                   <th scope="row" class="deleteShowTh hoverHideTh vertical-align-middle">
                     <span *ngIf="singleAddRowEditing && !postMix.singleAddRowEdit">{{ i + 1 }}</span>
                     <span *ngIf="!singleAddRowEditing" class="hoverHide">{{ i + 1 }}</span>
-                    <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
-                    <img *ngIf="postMix.singleAddRowEdit" role="button" src="/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('postMix'); postMix.singleAddRowEdit = false" />
+                    <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
+                    <img *ngIf="postMix.singleAddRowEdit" role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('postMix'); postMix.singleAddRowEdit = false" />
                   </th>
                   <td class="penShowTd vertical-align-middle">
                     <div *ngIf="!postMix.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="postMix.edit !== 'name'">
                         {{ postMix.name }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="postMix.edit = 'name'; checkEditStatus('postMix', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="postMix.edit = 'name'; checkEditStatus('postMix', i)">
                       </ng-container>
                       <ng-container *ngIf="postMix.edit === 'name'">
                         <div class="position-relative w-full mr-10">
                           <input type="text" class="form-control" [value]="postMix.name" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="postMix.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="postMix.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow"  (click)="postMix.edit = ''; saveSingleCloum('postMix', postMix, 'A' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow"  (click)="postMix.edit = ''; saveSingleCloum('postMix', postMix, 'A' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="postMix.singleAddRowEdit">
@@ -231,29 +231,29 @@
                     <div *ngIf="!postMix.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="postMix.edit !== 'cost'">
                         NT {{ postMix.cost }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="postMix.edit = 'cost'; checkEditStatus('postMix', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="postMix.edit = 'cost'; checkEditStatus('postMix', i)">
                       </ng-container>
                       <ng-container *ngIf="postMix.edit === 'cost'">
                         <div class="position-relative flex align-items-center mr-10">
                           <span class="mr-10">NT</span>
                           <input type="number" class="form-control no-spinner" [value]="postMix.cost" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="postMix.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="postMix.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow" (click)="postMix.edit = ''; saveSingleCloum('postMix', postMix, 'B' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow" (click)="postMix.edit = ''; saveSingleCloum('postMix', postMix, 'B' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="postMix.singleAddRowEdit" class="flex justify-content-between">
                       <div class="position-relative flex align-items-center mr-10">
                         <span class="mr-10">NT</span>
                         <input type="number" class="form-control no-spinner mr-10" #addSingleCloumCost />
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('postMix')" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('postMix')" />
                       </div>
                     </div>
                   </td>
                 </tr>
                 <tr *ngIf="!singleAddRowEditing">
                   <td colspan="3" class="addRowTd">
-                    <img role="button" src="/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('postMix')" />
+                    <img role="button" src="/podcast-cost-tool/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('postMix')" />
                   </td>
                 </tr>
               </tbody>
@@ -268,22 +268,22 @@
                     <th scope="row" class="deleteShowTh hoverHideTh vertical-align-middle">
                       <span *ngIf="singleAddRowEditing && !sideRecordingCombination.singleAddRowEdit">{{ i + 1 }}</span>
                       <span *ngIf="!singleAddRowEditing" class="hoverHide">{{ i + 1 }}</span>
-                      <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
-                      <img *ngIf="sideRecordingCombination.singleAddRowEdit" role="button" src="/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('sideRecordingCombination'); sideRecordingCombination.singleAddRowEdit = false" />
+                      <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
+                      <img *ngIf="sideRecordingCombination.singleAddRowEdit" role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('sideRecordingCombination'); sideRecordingCombination.singleAddRowEdit = false" />
                     </th>
                     <td class="penShowTd vertical-align-middle">
                       <div *ngIf="!sideRecordingCombination.singleAddRowEdit" class="flex justify-content-between">
                         <ng-container *ngIf="sideRecordingCombination.edit !== 'name'">
                           {{ sideRecordingCombination.name }}
-                          <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow"
+                          <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow"
                           (click)="sideRecordingCombination.edit = 'name'; sideRecordingCombination.gender.FeMale.edit = ''; sideRecordingCombination.gender.Male.edit = ''; checkEditStatus('sideRecordingCombination', i)">
                         </ng-container>
                         <ng-container *ngIf="sideRecordingCombination.edit === 'name'">
                           <div class="position-relative w-full mr-10">
                             <input type="text" class="form-control" [value]="sideRecordingCombination.name" #saveSignleCloumEle />
-                            <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="sideRecordingCombination.edit = ''" />
+                            <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="sideRecordingCombination.edit = ''" />
                           </div>
-                          <img role="button" src="/assets/img/check.svg" class="confirmShow"  (click)="sideRecordingCombination.edit = ''; saveSingleCloum('sideRecordingCombination', sideRecordingCombination, 'A' + (i + 2), saveSignleCloumEle.value)" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow"  (click)="sideRecordingCombination.edit = ''; saveSingleCloum('sideRecordingCombination', sideRecordingCombination, 'A' + (i + 2), saveSignleCloumEle.value)" />
                         </ng-container>
                       </div>
                       <div *ngIf="sideRecordingCombination.singleAddRowEdit">
@@ -297,23 +297,23 @@
                       <div *ngIf="!sideRecordingCombination.singleAddRowEdit" class="flex justify-content-between">
                         <ng-container *ngIf="sideRecordingCombination.gender.FeMale.edit !== 'cost'">
                           NT {{ sideRecordingCombination.gender.FeMale.cost }}
-                          <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow"
+                          <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow"
                           (click)="sideRecordingCombination.gender.FeMale.edit = 'cost'; sideRecordingCombination.gender.Male.edit = ''; sideRecordingCombination.edit = ''; checkEditStatus('sideRecordingCombination', i)">
                         </ng-container>
                         <ng-container *ngIf="sideRecordingCombination.gender.FeMale.edit === 'cost'">
                           <div class="position-relative flex align-items-center mr-10">
                             <span class="mr-10">NT</span>
                             <input type="number" class="form-control no-spinner" [value]="sideRecordingCombination.gender.FeMale.cost" #saveSignleCloumEle />
-                            <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="sideRecordingCombination.gender.FeMale.edit = ''" />
+                            <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="sideRecordingCombination.gender.FeMale.edit = ''" />
                           </div>
-                          <img role="button" src="/assets/img/check.svg" class="confirmShow" (click)="sideRecordingCombination.gender.FeMale.edit = ''; saveSingleCloum('sideRecordingCombination', sideRecordingCombination.gender.FeMale, 'C' + (i + 2), saveSignleCloumEle.value)" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow" (click)="sideRecordingCombination.gender.FeMale.edit = ''; saveSingleCloum('sideRecordingCombination', sideRecordingCombination.gender.FeMale, 'C' + (i + 2), saveSignleCloumEle.value)" />
                         </ng-container>
                       </div>
                       <div *ngIf="sideRecordingCombination.singleAddRowEdit" class="flex justify-content-between">
                         <div class="position-relative flex align-items-center mr-10">
                           <span class="mr-10">NT</span>
                           <input type="number" class="form-control no-spinner mr-10" #addSingleCloumFeMaleCost />
-                          <img src="/assets/img/check.svg" class="confirmShow mr-0-i opacity-0" disabled />
+                          <img src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow mr-0-i opacity-0" disabled />
                         </div>
                       </div>
                     </td>
@@ -326,23 +326,23 @@
                       <div *ngIf="!sideRecordingCombination.singleAddRowEdit" class="flex justify-content-between">
                         <ng-container *ngIf="sideRecordingCombination.gender.Male.edit !== 'cost'">
                           NT {{ sideRecordingCombination.gender.Male.cost }}
-                          <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow"
+                          <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow"
                             (click)="sideRecordingCombination.gender.Male.edit = 'cost'; sideRecordingCombination.gender.FeMale.edit = ''; sideRecordingCombination.edit = ''; checkEditStatus('sideRecordingCombination', i)">
                           </ng-container>
                         <ng-container *ngIf="sideRecordingCombination.gender.Male.edit === 'cost'">
                           <div class="position-relative flex align-items-center mr-10">
                             <span class="mr-10">NT</span>
                             <input type="number" class="form-control no-spinner" [value]="sideRecordingCombination.gender.Male.cost" #saveSignleCloumEle />
-                            <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="sideRecordingCombination.gender.Male.edit = ''" />
+                            <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="sideRecordingCombination.gender.Male.edit = ''" />
                           </div>
-                          <img role="button" src="/assets/img/check.svg" class="confirmShow" (click)="sideRecordingCombination.gender.Male.edit = ''; saveSingleCloum('sideRecordingCombination', sideRecordingCombination.gender.Male, 'C' + (i + 1 + 2), saveSignleCloumEle.value)" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow" (click)="sideRecordingCombination.gender.Male.edit = ''; saveSingleCloum('sideRecordingCombination', sideRecordingCombination.gender.Male, 'C' + (i + 1 + 2), saveSignleCloumEle.value)" />
                         </ng-container>
                       </div>
                       <div *ngIf="sideRecordingCombination.singleAddRowEdit" class="flex justify-content-between">
                         <div class="position-relative flex align-items-center mr-10">
                           <span class="mr-10">NT</span>
                           <input type="number" class="form-control no-spinner mr-10" #addSingleCloumMaleCost />
-                          <img role="button" src="/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('sideRecordingCombination')" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('sideRecordingCombination')" />
                         </div>
                       </div>
                     </td>
@@ -350,7 +350,7 @@
                 </ng-container>
                 <tr *ngIf="!singleAddRowEditing">
                   <td colspan="4" class="addRowTd">
-                    <img role="button" src="/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('sideRecordingCombination')" />
+                    <img role="button" src="/podcast-cost-tool/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('sideRecordingCombination')" />
                   </td>
                 </tr>
               </tbody>
@@ -364,21 +364,21 @@
                   <th scope="row" class="deleteShowTh hoverHideTh vertical-align-middle">
                     <span *ngIf="singleAddRowEditing && !outboundInterviewWriter.singleAddRowEdit">{{ i + 1 }}</span>
                     <span *ngIf="!singleAddRowEditing" class="hoverHide">{{ i + 1 }}</span>
-                    <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
-                    <img *ngIf="outboundInterviewWriter.singleAddRowEdit" role="button" src="/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('outboundInterviewWriter'); outboundInterviewWriter.singleAddRowEdit = false" />
+                    <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
+                    <img *ngIf="outboundInterviewWriter.singleAddRowEdit" role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('outboundInterviewWriter'); outboundInterviewWriter.singleAddRowEdit = false" />
                   </th>
                   <td class="penShowTd vertical-align-middle">
                     <div *ngIf="!outboundInterviewWriter.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="outboundInterviewWriter.edit !== 'name'">
                         {{ outboundInterviewWriter.name }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="outboundInterviewWriter.edit = 'name'; checkEditStatus('outboundInterviewWriter', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="outboundInterviewWriter.edit = 'name'; checkEditStatus('outboundInterviewWriter', i)">
                       </ng-container>
                       <ng-container *ngIf="outboundInterviewWriter.edit === 'name'">
                         <div class="position-relative w-full mr-10">
                           <input type="text" class="form-control" [value]="outboundInterviewWriter.name" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="outboundInterviewWriter.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="outboundInterviewWriter.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow"  (click)="outboundInterviewWriter.edit = ''; saveSingleCloum('outboundInterviewWriter', outboundInterviewWriter, 'A' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow"  (click)="outboundInterviewWriter.edit = ''; saveSingleCloum('outboundInterviewWriter', outboundInterviewWriter, 'A' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="outboundInterviewWriter.singleAddRowEdit">
@@ -391,29 +391,29 @@
                     <div *ngIf="!outboundInterviewWriter.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="outboundInterviewWriter.edit !== 'cost'">
                         NT {{ outboundInterviewWriter.cost }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="outboundInterviewWriter.edit = 'cost'; checkEditStatus('outboundInterviewWriter', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="outboundInterviewWriter.edit = 'cost'; checkEditStatus('outboundInterviewWriter', i)">
                       </ng-container>
                       <ng-container *ngIf="outboundInterviewWriter.edit === 'cost'">
                         <div class="position-relative flex align-items-center mr-10">
                           <span class="mr-10">NT</span>
                           <input type="number" class="form-control no-spinner" [value]="outboundInterviewWriter.cost" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="outboundInterviewWriter.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="outboundInterviewWriter.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow" (click)="outboundInterviewWriter.edit = ''; saveSingleCloum('outboundInterviewWriter', outboundInterviewWriter, 'B' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow" (click)="outboundInterviewWriter.edit = ''; saveSingleCloum('outboundInterviewWriter', outboundInterviewWriter, 'B' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="outboundInterviewWriter.singleAddRowEdit" class="flex justify-content-between">
                       <div class="position-relative flex align-items-center mr-10">
                         <span class="mr-10">NT</span>
                         <input type="number" class="form-control no-spinner mr-10" #addSingleCloumCost />
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('outboundInterviewWriter')" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('outboundInterviewWriter')" />
                       </div>
                     </div>
                   </td>
                 </tr>
                 <tr *ngIf="!singleAddRowEditing">
                   <td colspan="3" class="addRowTd">
-                    <img role="button" src="/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('outboundInterviewWriter')" />
+                    <img role="button" src="/podcast-cost-tool/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('outboundInterviewWriter')" />
                   </td>
                 </tr>
               </tbody>
@@ -427,21 +427,21 @@
                   <th scope="row" class="deleteShowTh hoverHideTh vertical-align-middle">
                     <span *ngIf="singleAddRowEditing && !photography.singleAddRowEdit">{{ i + 1 }}</span>
                     <span *ngIf="!singleAddRowEditing" class="hoverHide">{{ i + 1 }}</span>
-                    <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
-                    <img *ngIf="photography.singleAddRowEdit" role="button" src="/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('photography'); photography.singleAddRowEdit = false" />
+                    <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/circle-minus.svg" class="deleteShow" (click)="deleteRow()">
+                    <img *ngIf="photography.singleAddRowEdit" role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="confirmShow w-20-i" (click)="cancelAddRow('photography'); photography.singleAddRowEdit = false" />
                   </th>
                   <td class="penShowTd vertical-align-middle">
                     <div *ngIf="!photography.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="photography.edit !== 'name'">
                         {{ photography.name }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="photography.edit = 'name'; checkEditStatus('photography', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="photography.edit = 'name'; checkEditStatus('photography', i)">
                       </ng-container>
                       <ng-container *ngIf="photography.edit === 'name'">
                         <div class="position-relative w-full mr-10">
                           <input type="text" class="form-control" [value]="photography.name" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="photography.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="photography.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow"  (click)="photography.edit = ''; saveSingleCloum('photography', photography, 'A' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow"  (click)="photography.edit = ''; saveSingleCloum('photography', photography, 'A' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="photography.singleAddRowEdit">
@@ -454,29 +454,29 @@
                     <div *ngIf="!photography.singleAddRowEdit" class="flex justify-content-between">
                       <ng-container *ngIf="photography.edit !== 'cost'">
                         NT {{ photography.cost }}
-                        <img *ngIf="!singleAddRowEditing" role="button" src="/assets/img/pen.svg" class="penShow" (click)="photography.edit = 'cost'; checkEditStatus('photography', i)">
+                        <img *ngIf="!singleAddRowEditing" role="button" src="/podcast-cost-tool/assets/img/pen.svg" class="penShow" (click)="photography.edit = 'cost'; checkEditStatus('photography', i)">
                       </ng-container>
                       <ng-container *ngIf="photography.edit === 'cost'">
                         <div class="position-relative flex align-items-center mr-10">
                           <span class="mr-10">NT</span>
                           <input type="number" class="form-control no-spinner" [value]="photography.cost" #saveSignleCloumEle />
-                          <img role="button" src="/assets/img/circle-xmark.svg" class="cancelShow" (click)="photography.edit = ''" />
+                          <img role="button" src="/podcast-cost-tool/assets/img/circle-xmark.svg" class="cancelShow" (click)="photography.edit = ''" />
                         </div>
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow" (click)="photography.edit = ''; saveSingleCloum('photography', photography, 'B' + (i + 2), saveSignleCloumEle.value)" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow" (click)="photography.edit = ''; saveSingleCloum('photography', photography, 'B' + (i + 2), saveSignleCloumEle.value)" />
                       </ng-container>
                     </div>
                     <div *ngIf="photography.singleAddRowEdit" class="flex justify-content-between">
                       <div class="position-relative flex align-items-center mr-10">
                         <span class="mr-10">NT</span>
                         <input type="number" class="form-control no-spinner mr-10" #addSingleCloumCost />
-                        <img role="button" src="/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('photography')" />
+                        <img role="button" src="/podcast-cost-tool/assets/img/check.svg" class="confirmShow mr-0-i" (click)="confirmAddRow('photography')" />
                       </div>
                     </div>
                   </td>
                 </tr>
                 <tr *ngIf="!singleAddRowEditing">
                   <td colspan="3" class="addRowTd">
-                    <img role="button" src="/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('photography')" />
+                    <img role="button" src="/podcast-cost-tool/assets/img/circle-plus.svg" class="addRowShow" (click)="addRow('photography')" />
                   </td>
                 </tr>
               </tbody>
