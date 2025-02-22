@@ -150,7 +150,7 @@ export class AppComponent {
 
   async getSheetDataFromGoogle(sheetId: string) {
     window.localStorage.setItem('sheetId', sheetId);
-    const moderatorUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/主持人!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const moderatorUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/主持人!A1:B1000?key=AIzaSyCI1zwNGbbeULiKXx4uqckyvBs2bhVnQP4`;
     const moderatorRes = await fetch(moderatorUrl);
     const moderatorData = await moderatorRes.json();
     moderatorData.values.forEach((data: any, index: number) => {
@@ -160,7 +160,7 @@ export class AppComponent {
     });
     window.localStorage.setItem('moderatorArrayV3', JSON.stringify(this.moderatorArray));
 
-    const recordingStudioUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/錄音室!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const recordingStudioUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/錄音室!A1:B1000?key=AIzaSyCI1zwNGbbeULiKXx4uqckyvBs2bhVnQP4`;
     const recordingStudioRes = await fetch(recordingStudioUrl);
     const recordingStudioData = await recordingStudioRes.json();
     recordingStudioData.values.forEach((data: any, index: number) => {
@@ -170,7 +170,7 @@ export class AppComponent {
     });
     window.localStorage.setItem('recordingStudioArrayV3', JSON.stringify(this.recordingStudioArray));
 
-    const postMixArrayUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/後製混音!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const postMixArrayUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/後製混音!A1:B1000?key=AIzaSyCI1zwNGbbeULiKXx4uqckyvBs2bhVnQP4`;
     const postMixArrayRes = await fetch(postMixArrayUrl);
     const postMixArrayData = await postMixArrayRes.json();
     postMixArrayData.values.forEach((data: any, index: number) => {
@@ -180,7 +180,7 @@ export class AppComponent {
     });
     window.localStorage.setItem('postMixArrayV3', JSON.stringify(this.postMixArray));
 
-    const sideRecordingCombinationUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/梳化!A1:C1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const sideRecordingCombinationUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/梳化!A1:C1000?key=AIzaSyCI1zwNGbbeULiKXx4uqckyvBs2bhVnQP4`;
     const sideRecordingCombinationRes = await fetch(sideRecordingCombinationUrl);
     const sideRecordingCombinationData = await sideRecordingCombinationRes.json();
     sideRecordingCombinationData.values.forEach((data: any, index: number) => {
@@ -202,7 +202,7 @@ export class AppComponent {
     });
     window.localStorage.setItem('sideRecordingCombinationArrayV3', JSON.stringify(this.sideRecordingCombinationArray));
 
-    const outboundInterviewWriterUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/訪綱寫手!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const outboundInterviewWriterUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/訪綱寫手!A1:B1000?key=AIzaSyCI1zwNGbbeULiKXx4uqckyvBs2bhVnQP4`;
     const outboundInterviewWriterRes = await fetch(outboundInterviewWriterUrl);
     const outboundInterviewWriterData = await outboundInterviewWriterRes.json();
     outboundInterviewWriterData.values.forEach((data: any, index: number) => {
@@ -212,7 +212,7 @@ export class AppComponent {
     });
     window.localStorage.setItem('outboundInterviewWriterArrayV3', JSON.stringify(this.outboundInterviewWriterArray));
 
-    const photographyUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/平面攝影!A1:B1000?key=AIzaSyDZ21ZBtNKXcwMQ-KlGOH1DtntDYmewXS0`;
+    const photographyUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/平面攝影!A1:B1000?key=AIzaSyCI1zwNGbbeULiKXx4uqckyvBs2bhVnQP4`;
     const photographyRes = await fetch(photographyUrl);
     const photographyData = await photographyRes.json();
     photographyData.values.forEach((data: any, index: number) => {
