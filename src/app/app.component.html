@@ -10,7 +10,7 @@
         <h4 class="bounceIn animation-delay4">從Google表單匯入</h4>
         <div class="flex w-full bounceIn animation-delay4 mb-20">
           <p class="mb-0 mr-10 flex align-items-center w-5-p fs-25 blod">ID</p>
-          <input type="text" class="form-control w-80-p mr-10" value="1LkJg3P4RQGlNwFggYHzV0lAC4F8soFUIyIGaUdwsoZM" [disabled]="sheetName" #googleSheetId />
+          <input type="text" class="form-control w-80-p mr-10" placeholder="請輸入表單ID" [disabled]="sheetName" #googleSheetId />
           <button *ngIf="!sheetName" class="form-control w-15-p" (click)="getSheetNames(googleSheetId.value)">檢查表單</button>
         </div>
         <div *ngIf="sheetName" class="flex fade-in-down">
